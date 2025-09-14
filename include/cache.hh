@@ -1,3 +1,78 @@
+/*
+================================================================================
+                            STL Reference for Cache2Q
+================================================================================
+1. std::list<T>
+   - Doubly-linked list. Maintains element order, efficient insert/remove at both ends.
+
+   Methods:
+   ------------------------------------------------------------------------
+   iterator emplace_front(Args&&... args)
+       - Parameters: arguments to construct element T in-place
+       - Returns: iterator to the newly inserted element
+       - Function: inserts new element at the beginning of the list
+
+   void push_front(const T& value)
+       - Parameters: const reference to element of type T
+       - Returns: void
+       - Function: inserts element at the front (copy)
+
+   void pop_back()
+       - Parameters: none
+       - Returns: void
+       - Function: removes last element
+
+   T& back()
+       - Parameters: none
+       - Returns: reference to last element
+       - Function: access the last element
+
+   void splice(iterator pos, list& other, iterator it)
+       - Parameters: 
+           pos   - iterator in target list where element will be moved
+           other - source list
+           it    - iterator to element in source list
+       - Returns: void
+       - Function: moves element from 'other' list to 'this' list at position 'pos'
+
+--------------------------------------------------------------------------------
+2. std::unordered_map<Key, Value>
+   - Hash table for O(1) access by key. Stores key-value pairs.
+
+   Methods:
+   ------------------------------------------------------------------------
+   iterator find(const Key& key)
+       - Parameters: key to search
+       - Returns: iterator to element if found, else end()
+       - Function: check existence of key
+
+   std::pair<iterator, bool> emplace(const Key& k, const Value& v)
+       - Parameters: key k, value v
+       - Returns: pair<iterator,bool> where bool=true if insertion happened
+       - Function: insert key-value pair if key does not exist
+
+   void erase(const Key& key)
+       - Parameters: key to remove
+       - Returns: void
+       - Function: remove element by key
+
+--------------------------------------------------------------------------------
+3. std::pair<Key, Elem>
+   - Simple struct storing two elements (first=Key, second=Elem)
+   - Usage: store (key, page) in a_main_list_ and a_in_list_
+   - Access: pair.first, pair.second
+
+--------------------------------------------------------------------------------
+4. iterator (list::iterator)
+   - Object that points to an element in a list
+   - Supports:
+       *it           : dereference
+       ++it, --it    : increment/decrement
+       it1 == it2    : comparison
+   - Usage: store position of element in list for O(1) removal or move
+--------------------------------------------------------------------------------
+*/
+
 #pragma once
 
 #include <list>

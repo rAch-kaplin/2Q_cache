@@ -1,3 +1,72 @@
+/*
+================================================================================
+                     STL / Standard Library Reference for main.cpp
+================================================================================
+
+1. <chrono>
+   - Provides types for time measurement and durations.
+   
+   Methods / Types:
+   ------------------------------------------------------------------------
+   std::chrono::milliseconds(unsigned long ms)
+       - Parameters: number of milliseconds
+       - Returns: duration object
+       - Function: represents a time duration in milliseconds
+
+--------------------------------------------------------------------------------
+2.. <string>
+   - Provides std::string for text manipulation.
+   
+   Methods / Usage:
+   ------------------------------------------------------------------------
+   std::string::operator+ (const std::string& rhs)
+       - Parameters: rhs string to concatenate
+       - Returns: new std::string
+       - Function: concatenate strings
+
+   std::to_string(int value)
+       - Parameters: numeric value (int, long, etc.)
+       - Returns: std::string representation
+
+--------------------------------------------------------------------------------
+5. <cstdlib>
+   - Provides general utilities like random number generation and exit.
+   
+   Methods:
+   ------------------------------------------------------------------------
+   int rand()
+       - Parameters: none
+       - Returns: int (pseudo-random number in 0..RAND_MAX)
+
+--------------------------------------------------------------------------------
+6. <thread>
+   - Provides multithreading utilities.
+   
+   Methods:
+   ------------------------------------------------------------------------
+   std::this_thread::sleep_for(const std::chrono::duration& dur)
+       - Parameters: duration object
+       - Returns: void
+       - Function: pauses current thread for given duration
+
+--------------------------------------------------------------------------------
+7. <vector>
+   - Dynamic array, contiguous storage.
+   
+   Methods / Usage:
+   ------------------------------------------------------------------------
+   void push_back(const T& value)
+       - Parameters: value of type T
+       - Returns: void
+       - Function: appends element at end of vector
+
+   size_t size() const
+       - Parameters: none
+       - Returns: number of elements in vector
+
+--------------------------------------------------------------------------------
+*/
+
 #include <chrono>
 #include <cstddef>
 #include <iostream>
