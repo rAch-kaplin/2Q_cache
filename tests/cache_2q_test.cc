@@ -3,24 +3,20 @@
 #include <string>
 
 #include "cache.hh"
+#include "page.hh"
 
 struct TestCase {
-        std::size_t cache_size;
-        std::vector<int> elems;
-        std::size_t expected_hits;
+    std::size_t         cache_size;
+    std::vector<int>    elems;
+    std::size_t         expected_hits;
 };
-
-static Page slow_get_page(const int& key) {
-	return Page(key, "data " + std::to_string(key));
-}
-
 
 static std::size_t RUN_TEST_E2E(std::size_t cache_size, const std::vector<int>& elems) {
     Cache2Q<int, Page> cache(cache_size);
     std::size_t hits = 0;
 
     for (int key : elems) {
-        if (cache.lookup_update(key, slow_get_page)) hits++;
+        if (cache.lookup_update(key, slow_get_page_test)) hits++;
     }
 
     return hits;

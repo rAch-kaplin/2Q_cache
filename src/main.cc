@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "cache.hh"
+#include "page.hh"
 
 Page slow_get_page(const int& key) {
 	std::cout << "slow_get_page" << std::endl;
@@ -37,7 +38,7 @@ int main() {
     }
 
     std::cout << "\n--- Cache Statistics ---\n";
-    
+
     std::cout << "Total requests: "     << requests.size()          << std::endl;
     std::cout << "Cache hits: "         << hits                     << std::endl;
     std::cout << "Cache misses: "       << requests.size() - hits   << std::endl;

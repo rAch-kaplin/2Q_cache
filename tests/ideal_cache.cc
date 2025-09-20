@@ -1,0 +1,110 @@
+#include <cstddef>
+#include <gtest/gtest.h>
+#include <string>
+
+#include "ideal_cache.hh"
+#include "page.hh"
+
+struct TestCase {
+    std::size_t         cache_size;
+    std::vector<int>    elems;
+    std::size_t         expected_hits;
+};
+
+static std::size_t RUN_TEST_E2E_IDEAL(std::size_t cache_size, const std::vector<int>& requests) {
+    IdealCache<int, Page> cache(cache_size, requests);
+    std::size_t hits = 0;
+
+    for (int key : requests) {
+        if (cache.lookup_update(key, slow_get_page_test)) hits++;
+    }
+    return hits;
+}
+
+TEST(IdealCache, Test_Case_1) {
+    TestCase test{
+        5,
+        {1, 2, 2, 4, 1, 5, 1, 6, 3, 7},
+        2
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_2) {
+    TestCase test{
+        10,
+        {1, 2, 3, 1, 1},
+        1
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_3) {
+    TestCase test{
+        10,
+        {1, 2, 3, 4, 1, 2, 5, 6, 3, 4, 3},
+        1
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_4) {
+    TestCase test{
+        8,
+        {1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+        0
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_5) {
+    TestCase test{
+        15,
+        {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5},
+        3
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_6) {
+    TestCase test{
+        10,
+        {1, 2, 3, 4, 5, 6, 7, 8, 1, 1},
+        1
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_7) {
+    TestCase test{
+        10,
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        9
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Test_Case_8) {
+    TestCase test{
+        5,
+        {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 1, 1},
+        1
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_GE(hits, test.expected_hits);
+}

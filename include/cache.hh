@@ -7,13 +7,6 @@
 
 const std::size_t CACHE_SIZE = 5;
 
-struct Page {
-    int			id;
-	std::string data;
-
-	Page(int i, const std::string& d = "") : id(i), data(d) {}
-};
-
 template <typename KeyT, typename ElemT>
 class Cache2Q {
 	std::size_t a_in_size_{ 0 };
