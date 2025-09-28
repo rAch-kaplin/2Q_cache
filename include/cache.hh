@@ -3,7 +3,6 @@
 #include <list>
 #include <unordered_map>
 #include <utility>
-#include <string>
 
 const std::size_t CACHE_SIZE = 5;
 

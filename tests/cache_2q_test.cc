@@ -1,6 +1,5 @@
 #include <cstddef>
 #include <gtest/gtest.h>
-#include <string>
 
 #include "cache.hh"
 #include "page.hh"
