@@ -38,7 +38,8 @@ cmake --build build
 
 Run Cache:
 ```bash
-./build/cache
+./build/cache_2q        // for 2Q_cache
+./build/ideal_cache     // for ideal cache
 ```
 
 Run Tests:
