@@ -1,17 +1,10 @@
-#include <chrono>
 #include <cstddef>
 #include <iostream>
-#include <string>
 #include <cstdlib>
-#include <thread>
 #include <vector>
 
 #include "cache.hh"
 #include "page.hh"
-
-int slow_get_page(int key) {
-	return key;
-}
 
 int main() {
     std::size_t cache_size;

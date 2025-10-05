@@ -16,7 +16,7 @@ static std::size_t RUN_TEST_E2E_IDEAL(std::size_t cache_size, const std::vector<
     std::size_t hits = 0;
 
     for (int key : requests) {
-        if (cache.lookup_update(key, slow_get_page_test)) hits++;
+        if (cache.lookup_update(key, slow_get_page)) hits++;
     }
     return hits;
 }

@@ -1,13 +1,14 @@
 #pragma once
 
+#include <cstddef>
 #include <list>
 #include <unordered_map>
 #include <utility>
 
-const std::size_t CACHE_SIZE = 5;
-
 template <typename KeyT, typename ElemT>
 class Cache2Q {
+    static constexpr std::size_t MIN_CACHE_SIZE = 5;
+
 	std::size_t a_in_size_{ 0 };
 	std::size_t a_out_size_{ 0 };
 	std::size_t a_main_size_{ 0 };
@@ -29,8 +30,8 @@ class Cache2Q {
 
 public:
 	explicit Cache2Q(std::size_t size) {
-		if (size < CACHE_SIZE) {
-			size = CACHE_SIZE;
+		if (size < MIN_CACHE_SIZE) {
+			size = MIN_CACHE_SIZE;
 		}
 
 		a_in_size_ 		= size * 0.2;
@@ -65,8 +66,8 @@ public:
 private:
 	void insert_in_a_main(const KeyT& key, ElemT page) {
 		if (a_main_list_.size() >= a_main_size_) {
-			auto last_elem = a_main_list_.back().first;
-			a_main_map_.erase(last_elem);
+			const auto& last_elem_key = a_main_list_.back().first;
+			a_main_map_.erase(last_elem_key);
 			a_main_list_.pop_back();
 		}
 
@@ -76,12 +77,12 @@ private:
 
 	void insert_in_a_in(const KeyT& key, ElemT page) {
 		if (a_in_list_.size() >= a_in_size_) {
-			auto last_elem = a_in_list_.back().first;
-			a_in_map_.erase(last_elem);
+			const auto& last_elem_key = a_in_list_.back().first;
+			a_in_map_.erase(last_elem_key);
 			a_in_list_.pop_back();
 
-			a_out_list_.push_front(last_elem);
-			a_out_map_.emplace(last_elem, a_out_list_.begin());
+			a_out_list_.push_front(last_elem_key);
+			a_out_map_.emplace(last_elem_key, a_out_list_.begin());
 
 			if (a_out_list_.size() >= a_out_size_) {
 				auto out_last_iter = a_out_list_.back();
