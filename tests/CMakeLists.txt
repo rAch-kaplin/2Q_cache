@@ -1,4 +1,4 @@
-find_package(GTest QUIET)
+find_package(GTest REQUIRED)
 
 add_executable(
     cache_tests
