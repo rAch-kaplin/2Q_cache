@@ -16,10 +16,17 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with: 
-          submodels: recursive
+          submodules: recursive
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y g++ cmake
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y g++ cmake libgtest-dev
+
+        cd /usr/src/gtest
+        sudo cmake .
+        sudo make
+        sudo cp lib/*.a /usr/lib
 
     - name: Configure & Build
       run: |
