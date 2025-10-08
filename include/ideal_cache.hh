@@ -4,13 +4,12 @@
 #include <list>
 #include <vector>
 
-const std::size_t MIN_CACHE_SIZE = 5;
-
 template <typename KeyT, typename ElemT>
 class IdealCache {
 private:
-    std::size_t cache_size_;
-    std::size_t cur_pos_;
+    static constexpr std::size_t    MIN_CACHE_SIZE = 5;    
+    std::size_t                     cache_size_;
+    std::size_t                     cur_pos_;
 
     std::unordered_map      <KeyT, ElemT>                   hash_t_;
     std::unordered_map      <KeyT, std::list<std::size_t>>  key_positions_;
@@ -61,7 +60,7 @@ public:
             return false;
         }
 
-        KeyT key_to_evict = find_key_to_evict();
+        const auto& key_to_evict = find_key_to_evict();
         hash_t_.erase(key_to_evict);
         hash_t_.emplace(key, elem);
         cur_pos_++;
@@ -70,7 +69,7 @@ public:
 
 private:
     KeyT find_key_to_evict() {
-        KeyT key_to_evict = hash_t_.begin()->first;
+        auto it_on_evict_key = hash_t_.begin();
         std::size_t distant_pos = 0;
 
         for (const auto& [key, elem] : hash_t_) {
@@ -86,11 +85,11 @@ private:
 
             if (positions.front() > distant_pos) {
                 distant_pos = positions.front();
-                key_to_evict = key;
+                it_on_evict_key = hash_t_.find(key);
             }
         }
 
-        return key_to_evict;
+        return it_on_evict_key->first;
     }
 
     void set_future_requests(const std::vector<KeyT>& requests) {
