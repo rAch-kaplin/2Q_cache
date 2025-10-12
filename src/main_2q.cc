@@ -1,10 +1,10 @@
+#include "cache.hh"
+#include "page.hh"
+
 #include <cstddef>
 #include <iostream>
 #include <cstdlib>
 #include <vector>
-
-#include "cache.hh"
-#include "page.hh"
 
 int main() {
     std::size_t cache_size;

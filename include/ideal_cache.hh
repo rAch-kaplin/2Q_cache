@@ -25,7 +25,7 @@ public:
         cur_pos_        = 0;
 
         if (!requests.empty()) {
-            set_future_requests(requests);
+            set_future_requests(requests.begin(), requests.end());
         }
     }
 
@@ -60,19 +60,20 @@ public:
             return false;
         }
 
-        const auto& key_to_evict = find_key_to_evict();
-        hash_t_.erase(key_to_evict);
+        auto it_to_evict = find_key_to_evict();
+        hash_t_.erase(it_to_evict);
         hash_t_.emplace(key, elem);
         cur_pos_++;
         return false;
     }
 
 private:
-    KeyT find_key_to_evict() {
+    typename decltype(hash_t_)::iterator find_key_to_evict() {
         auto it_on_evict_key = hash_t_.begin();
         std::size_t distant_pos = 0;
 
-        for (const auto& [key, elem] : hash_t_) {
+        for (auto it = hash_t_.begin(); it != hash_t_.end(); it++) {
+            const auto& key = it->first;
             auto& positions = key_positions_[key];
 
             while (!positions.empty() && positions.front() <= cur_pos_) {
@@ -80,24 +81,26 @@ private:
             }
 
             if (positions.empty()) {
-                return key;
+                return it;
             }
 
             if (positions.front() > distant_pos) {
                 distant_pos = positions.front();
-                it_on_evict_key = hash_t_.find(key);
+                it_on_evict_key = it; 
             }
         }
 
-        return it_on_evict_key->first;
+       return it_on_evict_key;
     }
 
-    void set_future_requests(const std::vector<KeyT>& requests) {
+    template<typename InputIt>
+    void set_future_requests(InputIt begin, InputIt end) {
         cur_pos_ = 0;
         key_positions_.clear();
 
-        for (std::size_t i = 0; i < requests.size(); ++i) {
-            key_positions_[requests[i]].push_back(i);
+        std::size_t i = 0;
+        for (auto it = begin;  it != end; it++, i++) {
+            key_positions_[*it].push_back(i);
         }
     }
 };
