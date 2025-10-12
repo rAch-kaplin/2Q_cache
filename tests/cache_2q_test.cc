@@ -1,8 +1,8 @@
-#include <cstddef>
-#include <gtest/gtest.h>
-
 #include "cache.hh"
 #include "page.hh"
+
+#include <cstddef>
+#include <gtest/gtest.h>
 
 struct TestCase {
     std::size_t         cache_size;
@@ -11,7 +11,7 @@ struct TestCase {
 };
 
 static std::size_t RUN_TEST_E2E(std::size_t cache_size, const std::vector<int>& elems) {
-    Cache2Q<int, Page> cache(cache_size);
+    Cache2Q::Cache2Q<int, Page> cache(cache_size);
     std::size_t hits = 0;
 
     for (int key : elems) {

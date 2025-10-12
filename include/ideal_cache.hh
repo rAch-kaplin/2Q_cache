@@ -4,6 +4,8 @@
 #include <list>
 #include <vector>
 
+namespace IdealCache {
+
 template <typename KeyT, typename ElemT>
 class IdealCache {
 private:
@@ -104,3 +106,5 @@ private:
         }
     }
 };
+
+} // namespace IdealCache

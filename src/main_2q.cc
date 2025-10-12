@@ -33,7 +33,7 @@ int main() {
         requests.push_back(page_id);
     }
 
-    Cache2Q<int, Page> cache(cache_size);
+    Cache2Q::Cache2Q<int, Page> cache(cache_size);
 
     int hits = 0;
     for (int key : requests) {

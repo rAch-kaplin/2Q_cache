@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <utility>
 
+namespace Cache2Q {
+
 template <typename KeyT, typename ElemT>
 class Cache2Q {
     static constexpr std::size_t MIN_CACHE_SIZE = 5;
@@ -95,3 +97,5 @@ private:
 		a_in_map_.emplace(key, a_in_list_.begin());
 	}
 };
+
+} //namespace Cache2Q

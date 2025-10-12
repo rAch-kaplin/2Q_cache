@@ -1,10 +1,10 @@
+#include "page.hh"
+#include "ideal_cache.hh"
+
 #include <cstddef>
 #include <cstdlib>
 #include <vector>
 #include <iostream>
-
-#include "page.hh"
-#include "ideal_cache.hh"
 
 int main() {
     std::size_t cache_size;
@@ -33,7 +33,7 @@ int main() {
         requests.push_back(page_id);
     }
 
-    IdealCache<int, Page> cache(cache_size, requests);
+    IdealCache::IdealCache<int, Page> cache(cache_size, requests);
 
     int hits = 0;
     for (int key : requests) {
