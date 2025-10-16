@@ -1,8 +1,8 @@
-#include <cstddef>
-#include <gtest/gtest.h>
-
 #include "cache.hh"
 #include "page.hh"
+
+#include <cstddef>
+#include <gtest/gtest.h>
 
 struct TestCase {
     std::size_t         cache_size;
@@ -11,11 +11,11 @@ struct TestCase {
 };
 
 static std::size_t RUN_TEST_E2E(std::size_t cache_size, const std::vector<int>& elems) {
-    Cache2Q<int, Page> cache(cache_size);
+    Cache2Q::Cache2Q<int, Page> cache(cache_size);
     std::size_t hits = 0;
 
     for (int key : elems) {
-        if (cache.lookup_update(key, slow_get_page_test)) hits++;
+        if (cache.lookup_update(key, slow_get_page)) hits++;
     }
 
     return hits;
@@ -109,7 +109,3 @@ TEST(Cache_2Q, Test_Case_8) {
     EXPECT_EQ(hits, test.expected_hits);
 }
 
-int main(int argc, char **argv) {
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
-}

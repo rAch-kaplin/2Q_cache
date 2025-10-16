@@ -1,9 +1,8 @@
-#include <cstddef>
-#include <gtest/gtest.h>
-#include <string>
-
 #include "ideal_cache.hh"
 #include "page.hh"
+
+#include <cstddef>
+#include <gtest/gtest.h>
 
 struct TestCase {
     std::size_t         cache_size;
@@ -12,11 +11,11 @@ struct TestCase {
 };
 
 static std::size_t RUN_TEST_E2E_IDEAL(std::size_t cache_size, const std::vector<int>& requests) {
-    IdealCache<int, Page> cache(cache_size, requests);
+    IdealCache::IdealCache<int, Page> cache(cache_size, requests);
     std::size_t hits = 0;
 
     for (int key : requests) {
-        if (cache.lookup_update(key, slow_get_page_test)) hits++;
+        if (cache.lookup_update(key, slow_get_page)) hits++;
     }
     return hits;
 }

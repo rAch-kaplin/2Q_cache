@@ -1,17 +1,10 @@
-#include <chrono>
-#include <cstddef>
-#include <iostream>
-#include <string>
-#include <cstdlib>
-#include <thread>
-#include <vector>
-
 #include "cache.hh"
 #include "page.hh"
 
-int slow_get_page(int key) {
-	return key;
-}
+#include <cstddef>
+#include <iostream>
+#include <cstdlib>
+#include <vector>
 
 int main() {
     std::size_t cache_size;
@@ -40,7 +33,7 @@ int main() {
         requests.push_back(page_id);
     }
 
-    Cache2Q<int, Page> cache(cache_size);
+    Cache2Q::Cache2Q<int, Page> cache(cache_size);
 
     int hits = 0;
     for (int key : requests) {
