@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <list>
 #include <unordered_map>
@@ -9,8 +10,6 @@ namespace Cache2Q {
 
 template <typename KeyT, typename ElemT>
 class Cache2Q {
-    static constexpr std::size_t MIN_CACHE_SIZE = 5;
-
 	std::size_t a_in_size_{ 0 };
 	std::size_t a_out_size_{ 0 };
 	std::size_t a_main_size_{ 0 };
@@ -32,13 +31,13 @@ class Cache2Q {
 
 public:
 	explicit Cache2Q(std::size_t size) {
-		if (size < MIN_CACHE_SIZE) {
-			size = MIN_CACHE_SIZE;
+		if (size == 0) {
+			return;
 		}
 
-		a_in_size_ 		= size * 0.2;
-		a_out_size_ 	= size * 0.6;
-		a_main_size_ 	= size * 0.2;
+		a_in_size_   = std::max<std::size_t>(1, size / 4);
+		a_main_size_ = size - a_in_size_;
+		a_out_size_  = std::max<std::size_t>(1, size / 2);
 	}
 
 	template <typename FuncT>
@@ -53,7 +52,11 @@ public:
 			a_out_list_.erase(it->second);
 			a_out_map_.erase(it);
 
-			insert_in_a_main(key, slow_get_page(key));
+			if (a_main_size_ == 0) {
+				insert_in_a_in(key, slow_get_page(key));
+			} else {
+				insert_in_a_main(key, slow_get_page(key));
+			}
 
 			return false;
 		}
@@ -67,6 +70,10 @@ public:
 	}
 private:
 	void insert_in_a_main(const KeyT& key, ElemT page) {
+		if (a_main_size_ == 0) {
+			return;
+		}
+
 		if (a_main_list_.size() >= a_main_size_) {
 			const auto& last_elem_key = a_main_list_.back().first;
 			a_main_map_.erase(last_elem_key);
@@ -78,15 +85,24 @@ private:
 	}
 
 	void insert_in_a_in(const KeyT& key, ElemT page) {
+		if (a_in_size_ == 0) {
+			return;
+		}
+
 		if (a_in_list_.size() >= a_in_size_) {
 			const auto& last_elem_key = a_in_list_.back().first;
 			a_in_map_.erase(last_elem_key);
 			a_in_list_.pop_back();
 
-			a_out_list_.push_front(last_elem_key);
-			a_out_map_.emplace(last_elem_key, a_out_list_.begin());
+			if (auto out_it = a_out_map_.find(last_elem_key); out_it != a_out_map_.end()) {
+				a_out_list_.erase(out_it->second);
+				a_out_map_.erase(out_it);
+			}
 
-			if (a_out_list_.size() >= a_out_size_) {
+			a_out_list_.push_front(last_elem_key);
+			a_out_map_[last_elem_key] = a_out_list_.begin();
+
+			if (a_out_list_.size() > a_out_size_) {
 				auto out_last_iter = a_out_list_.back();
 				a_out_map_.erase(out_last_iter);
 				a_out_list_.pop_back();

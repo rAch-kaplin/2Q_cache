@@ -24,33 +24,33 @@ TEST(IdealCache, Test_Case_1) {
     TestCase test{
         5,
         {1, 2, 2, 4, 1, 5, 1, 6, 3, 7},
-        2
+        3
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_2) {
     TestCase test{
         10,
         {1, 2, 3, 1, 1},
-        1
+        2
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_3) {
     TestCase test{
         10,
         {1, 2, 3, 4, 1, 2, 5, 6, 3, 4, 3},
-        1
+        5
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_4) {
@@ -61,29 +61,29 @@ TEST(IdealCache, Test_Case_4) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_5) {
     TestCase test{
         15,
         {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5},
-        3
+        10
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_6) {
     TestCase test{
         10,
         {1, 2, 3, 4, 5, 6, 7, 8, 1, 1},
-        1
+        2
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_7) {
@@ -94,18 +94,18 @@ TEST(IdealCache, Test_Case_7) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_8) {
     TestCase test{
         5,
         {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 1, 1},
-        1
+        2
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_9) {
@@ -116,7 +116,7 @@ TEST(IdealCache, Test_Case_9) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_10) {
@@ -127,7 +127,7 @@ TEST(IdealCache, Test_Case_10) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_11) {
@@ -139,7 +139,7 @@ TEST(IdealCache, Test_Case_11) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_12) {
@@ -151,7 +151,7 @@ TEST(IdealCache, Test_Case_12) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_13) {
@@ -163,7 +163,7 @@ TEST(IdealCache, Test_Case_13) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_14) {
@@ -176,7 +176,7 @@ TEST(IdealCache, Test_Case_14) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
 TEST(IdealCache, Test_Case_15) {
@@ -187,6 +187,27 @@ TEST(IdealCache, Test_Case_15) {
     };
 
     std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
-    EXPECT_GE(hits, test.expected_hits);
+    EXPECT_EQ(hits, test.expected_hits);
 }
 
+TEST(IdealCache, Zero_Cache_Size) {
+    TestCase test{
+        0,
+        {1, 2, 1, 2, 1},
+        0
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_EQ(hits, test.expected_hits);
+}
+
+TEST(IdealCache, Size_One_Should_Skip_Cold_Page) {
+    TestCase test{
+        1,
+        {1, 2, 1, 1},
+        2
+    };
+
+    std::size_t hits = RUN_TEST_E2E_IDEAL(test.cache_size, test.elems);
+    EXPECT_EQ(hits, test.expected_hits);
+}

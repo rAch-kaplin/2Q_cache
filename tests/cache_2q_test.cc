@@ -69,7 +69,7 @@ TEST(Cache_2Q, Test_Case_5) {
     TestCase test{
         15,
         {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5},
-        3
+        5
     };
 
     std::size_t hits = RUN_TEST_E2E(test.cache_size, test.elems);
@@ -109,3 +109,24 @@ TEST(Cache_2Q, Test_Case_8) {
     EXPECT_EQ(hits, test.expected_hits);
 }
 
+TEST(Cache_2Q, Zero_Cache_Size) {
+    TestCase test{
+        0,
+        {1, 1, 1, 1},
+        0
+    };
+
+    std::size_t hits = RUN_TEST_E2E(test.cache_size, test.elems);
+    EXPECT_EQ(hits, test.expected_hits);
+}
+
+TEST(Cache_2Q, Size_One_Alternating_Keys) {
+    TestCase test{
+        1,
+        {1, 2, 1, 2, 1, 2},
+        0
+    };
+
+    std::size_t hits = RUN_TEST_E2E(test.cache_size, test.elems);
+    EXPECT_EQ(hits, test.expected_hits);
+}
